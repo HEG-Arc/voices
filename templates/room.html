@@ -1,0 +1,27 @@
+{% extends "base_mobile.html" %}
+
+{% block title %}{{ room.floor.building.name }}{% endblock %}
+
+{% block header %}{{ room.floor.building.name }}{% endblock %}
+
+{% block content %}
+    <p><img src="{{ STATIC_URL }}img/ttu.gif" alt="Talk to us! logo"></p>
+    <h3>{{ room.room_display }} - {{ room.room_name }}</h3>
+    <p>Vous pouvez nous communiquer tous les problèmes que vous rencontrez avec cette pièce. Nous prendrons les
+    mesures nécessaires dans les meilleurs délais.</p>
+    <div data-role="collapsible-set" data-theme="c" data-content-theme="d">
+    {% for notification_group in room.notification_groups.all %}
+        {% regroup notification_group.items.all by category as item_list %}
+            {% for items in item_list %}
+                <div data-role="collapsible">
+                <h3>{{ items.grouper }}</h3>
+                    <ul data-role="listview" data-theme="d">
+                        {% for item in items.list %}
+                            <li><a href="{% url new_voice room_id=room.id item_id=item.id %}">{{ item.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+    {% endfor %}
+    </div>
+{% endblock %}

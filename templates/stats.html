@@ -1,0 +1,56 @@
+{% extends "base_mobile.html" %}
+
+{% block title %}Stats{% endblock %}
+
+{% block header %}Stats{% endblock %}
+
+{% block content %}
+    <p><img src="{{ STATIC_URL }}img/ttu.gif" alt="Talk to us! logo"></p>
+    <h3>Statistiques d'utilisation actuelles</h3>
+
+    <h4>Notifications by period</h4>
+    <table data-role="table" id="states-table" data-mode="reflow" class="ui-responsive table-stroke">
+        <thead>
+        <tr>
+            <th data-priority="1">Period</th>
+            <th data-priority="2">#</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Today</td>
+                <td>{{ voices.day }}</td>
+            </tr>
+            <tr>
+                <td>This week</td>
+                <td>{{ voices.week }}</td>
+            </tr>
+            <tr>
+                <td>This month</td>
+                <td>{{ voices.month }}</td>
+            </tr>
+            <tr>
+                <td>Everytime</td>
+                <td>{{ voices.all }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4>Notifications by current state</h4>
+    <table data-role="table" id="states-table" data-mode="reflow" class="ui-responsive table-stroke">
+    <thead>
+    <tr>
+        <th data-priority="persist">State</th>
+        <th data-priority="1">#</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for state in states %}
+    <tr>
+        <td>{{ state.state }}</td>
+        <td>{{ state.voice_set.count }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% endblock %}

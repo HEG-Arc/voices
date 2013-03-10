@@ -1,0 +1,12 @@
+{% extends "base_mobile.html" %}
+
+{% block title %}HE-Arc > Voices!{% endblock %}
+
+{% block header %}Scan a QR-Code to start!{% endblock %}
+
+{% block content %}
+    <div class="center-wrapper">
+        <p><img src="{{ STATIC_URL }}img/ttu.gif" alt="Talk to us! logo"></p>
+        <p><a href="{% url qr 1000384734 %}"><img src="{{ STATIC_URL }}img/qr_1000384734.png" alt="QR-Code 1000384734"></a></p>
+    </div>
+{% endblock %}

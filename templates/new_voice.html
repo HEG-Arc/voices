@@ -1,0 +1,18 @@
+{% extends "base_mobile.html" %}
+
+{% block title %}{{ room.floor.building.name }}{% endblock %}
+
+{% block header %}{{ room.floor.building.name }}{% endblock %}
+
+{% block content %}
+    <p><img src="{{ STATIC_URL }}img/ttu.gif" alt="Talk to us! logo"></p>
+    <h3>{{ room.room_display }} - {{ room.room_name }}</h3>
+    <div class="ui-bar ui-bar-f">
+        {{ item.category.short_name }}<br>
+        {{ item.name }}
+    </div>
+    <form action="{% url new_voice room_id=room.id item_id=item.id %}" method="post" data-ajax="false">{% csrf_token %}
+        {{ form.as_p }}
+        <input data-theme="b" type="submit" value="Envoyer" />
+    </form>
+{% endblock %}
