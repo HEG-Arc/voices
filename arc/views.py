@@ -86,7 +86,7 @@ def new_voice(request, room_id, item_id):
                 voice.user = request.user
             voice.save()
             send_notification.delay(voice)
-            return HttpResponseRedirect(reverse('voice', kwargs={'voice_id': voice.id, 'new': True}))
+            return HttpResponseRedirect(reverse('voice', kwargs={'voice_id': voice.id,}))
     else:
         form = VoiceForm()  # An unbound form
     return render_to_response('new_voice.html', {"room": room, "item": item, "form": form},

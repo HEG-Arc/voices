@@ -12,7 +12,7 @@
                     <h3>{{ voice.grouper }}</h3>
                     <ul data-role="listview" data-theme="d">
                         {% for item in voice.list %}
-                            <li><a href="{% url home %}">{{ item.room.room_display }}-{{ item.room.room_name }} > {{ item.notification_item.short_name }}</a></li>
+                            <li><a href="{% url voice item.id %}">{{ item.room.room_display }}-{{ item.room.room_name }} > {{ item.notification_item.short_name }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
