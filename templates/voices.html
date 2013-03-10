@@ -1,0 +1,21 @@
+{% extends "base_mobile.html" %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block header %}Notifications{% endblock %}
+
+{% block content %}
+    <p><img src="{{ STATIC_URL }}img/ttu.gif" alt="Talk to us! logo"></p>
+            {% regroup voices by state as voices_list %}
+            {% for voice in voices_list %}
+                <div data-role="collapsible">
+                    <h3>{{ voice.grouper }}</h3>
+                    <ul data-role="listview" data-theme="d">
+                        {% for item in voice.list %}
+                            <li><a href="{% url home %}">{{ item.room.room_display }}-{{ item.room.room_name }} > {{ item.notification_item.short_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+    </div>
+{% endblock %}

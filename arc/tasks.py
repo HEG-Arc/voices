@@ -40,7 +40,7 @@ def send_xmpp(voice, xmppto):
     username = GOOGLE_TALK_USER
     passwd = GOOGLE_TALK_PASSWORD
     to = xmppto
-    msg = '%s\n%s-%s\n%s\nhttp://marmix.ig.he-arc.ch/voices/voice/%s/' % \
+    msg = '%s\n%s-%s\n%s\nhttp://marmix.ig.he-arc.ch/v/voice/%s/' % \
           (voice.room.floor.building.name, voice.room.room_display, voice.room.room_name, voice.notification_item.name,
            voice.id)
     client = xmpp.Client('gmail.com')

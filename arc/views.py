@@ -52,7 +52,20 @@ def room_from_qr(request, qr):
 
 def voice(request, voice_id):
     voice = Voice.objects.get(pk=int(voice_id))
-    return render_to_response('voice.html', {"voice": voice, }, context_instance=RequestContext(request))
+    return render_to_response('voice.html', {"voice": voice, 'new': False}, context_instance=RequestContext(request))
+
+
+def voices(request):
+    voices = Voice.objects.all().order_by('state')
+    return render_to_response('voices.html', {"voices": voices, }, context_instance=RequestContext(request))
+
+
+def set_voice(request, voice_id, state_id):
+    voice = Voice.objects.get(pk=int(voice_id))
+    state = VoiceState.objects.get(pk=int(state_id))
+    voice.state = state
+    voice.save()
+    return render_to_response('voice.html', {"voice": voice, 'new': False}, context_instance=RequestContext(request))
 
 
 def new_voice(request, room_id, item_id):
@@ -73,7 +86,7 @@ def new_voice(request, room_id, item_id):
                 voice.user = request.user
             voice.save()
             send_notification.delay(voice)
-            return HttpResponseRedirect(reverse('voice', kwargs={'voice_id': voice.id}))
+            return HttpResponseRedirect(reverse('voice', kwargs={'voice_id': voice.id, 'new': True}))
     else:
         form = VoiceForm()  # An unbound form
     return render_to_response('new_voice.html', {"room": room, "item": item, "form": form},

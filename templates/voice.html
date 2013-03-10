@@ -6,15 +6,24 @@
 
 {% block content %}
     <p><img src="{{ STATIC_URL }}img/ttu.gif" alt="Talk to us! logo"></p>
+    {% if new %}
     <p>Nous avons enregistré la communication suivante pour:</p>
+    {% endif %}
     <h3>{{ voice.room.room_display }} - {{ voice.room.room_name }}</h3>
     <div class="ui-bar ui-bar-f">
         <p>{{ voice.notification_item.category }}</p>
         <p>{{ voice.notification_item.name }}</p>
     </div><!-- /grid-a -->
-
-
     <p>{{ voice.message }}</p>
+    {% if new %}
     <p>Merci!</p>
-
+    {% endif %}
+    {% if user.is_authenticated %}
+    <p>State: {{ voice.state.state }}</p>
+    <fieldset class="ui-grid-b">
+        <div class="ui-block-a"><a href="{% url set_voice voice.id 1 %}" data-role="button" data-theme="c">Nouveau</a></div>
+        <div class="ui-block-b"><a href="{% url set_voice voice.id 2 %}" data-role="button" data-theme="b">En cours</a></div>
+        <div class="ui-block-c"><a href="{% url set_voice voice.id 3 %}" data-role="button" data-theme="a">Terminé</a></div>
+    </fieldset>
+    {% endif %}
 {% endblock %}

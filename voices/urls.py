@@ -31,7 +31,9 @@ urlpatterns = patterns('',
     url(r'^$', 'arc.views.home', name='home'),
     url(r'^qr/(?P<qr>\d+)/$', 'arc.views.room_from_qr', name='qr'),
     url(r'^voice/new/(?P<room_id>\d+)/(?P<item_id>\d+)/$', 'arc.views.new_voice', name='new_voice'),
+    url(r'^voice/(?P<voice_id>\d+)/set/(?P<state_id>\d+)/$', 'arc.views.set_voice', name='set_voice'),
     url(r'^voice/(?P<voice_id>\d+)/$', 'arc.views.voice', name='voice'),
+    url(r'^voices/$', 'arc.views.voices', name='voices'),
     url(r'^stats/$', 'arc.views.stats', name='stats'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
