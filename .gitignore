@@ -1,0 +1,6 @@
+# gitignore for voices
+.idea
+*.pyc
+*.db
+local_settings.py
+/sitestatic
