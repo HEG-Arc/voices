@@ -105,7 +105,7 @@
 		window: $( window ),
 		document: $( document ),
 
-		// TODO might be useful upstream in jquery itself ?
+		// Comment: might be useful upstream in jquery itself ?
 		keyCode: {
 			ALT: 18,
 			BACKSPACE: 8,
@@ -204,7 +204,7 @@
 			return ltr || defaultTheme || "a";
 		},
 
-		// TODO the following $ and $.fn extensions can/probably should be moved into jquery.mobile.core.helpers
+		// Comment: the following $ and $.fn extensions can/probably should be moved into jquery.mobile.core.helpers
 		//
 		// Find the closest javascript page element to gather settings data jsperf test
 		// http://jsperf.com/single-complex-selector-vs-many-complex-selectors/edit
@@ -460,7 +460,7 @@ $.widget = function( name, base, prototype ) {
 		}
 	});
 	constructor.prototype = $.widget.extend( basePrototype, {
-		// TODO: remove support for widgetEventPrefix
+		// Comment:: remove support for widgetEventPrefix
 		// always use the name + a colon as the prefix, e.g., draggable:start
 		// don't prefix for widgets that aren't DOM-based
 		widgetEventPrefix: existingConstructor ? basePrototype.widgetEventPrefix : name
@@ -625,7 +625,7 @@ $.Widget.prototype = {
 		this.element
 			.unbind( this.eventNamespace )
 			// 1.9 BC for #7810
-			// TODO remove dual storage
+			// Comment: remove dual storage
 			.removeData( this.widgetName )
 			.removeData( this.widgetFullName )
 			// support: jquery <1.6.3
@@ -883,7 +883,7 @@ $.widget( "mobile.widget", {
 	// decorate the parent _createWidget to trigger `widgetinit` for users
 	// who wish to do post post `widgetcreate` alterations/additions
 	//
-	// TODO create a pull request for jquery ui to trigger this event
+	// Comment: create a pull request for jquery ui to trigger this event
 	// in the original _createWidget
 	_createWidget: function() {
 		$.Widget.prototype._createWidget.apply( this, arguments );
@@ -923,7 +923,7 @@ $.widget( "mobile.widget", {
 		$widgetElements = $.mobile.enhanceable( $widgetElements );
 
 		if ( useKeepNative && $widgetElements.length ) {
-			// TODO remove dependency on the page widget for the keepNative.
+			// Comment: remove dependency on the page widget for the keepNative.
 			// Currently the keepNative value is defined on the page prototype so
 			// the method is as well
 			page = $.mobile.closestPageData( $widgetElements );
@@ -974,7 +974,7 @@ $.widget( "mobile.widget", {
 		}
 	});
 
-	// TODO move loader class down into the widget settings
+	// Comment: move loader class down into the widget settings
 	var loaderClass = "ui-loader", $html = $( "html" ), $window = $.mobile.window;
 
 	$.widget( "mobile.loader", {
@@ -1033,7 +1033,7 @@ $.widget( "mobile.widget", {
 		// Turn on/off page loading message. Theme doubles as an object argument
 		// with the following shape: { theme: '', text: '', html: '', textVisible: '' }
 		// NOTE that the $.mobile.loading* settings and params past the first are deprecated
-		// TODO sweet jesus we need to break some of this out
+		// Comment: sweet jesus we need to break some of this out
 		show: function( theme, msgText, textonly ) {
 			var textVisible, message, $header, loadSettings;
 
@@ -1079,7 +1079,7 @@ $.widget( "mobile.widget", {
 					" ui-loader-" + ( textVisible || msgText || theme.text ? "verbose" : "default" ) +
 					( loadSettings.textonly || textonly ? " ui-loader-textonly" : "" ) );
 
-				// TODO verify that jquery.fn.html is ok to use in both cases here
+				// Comment: verify that jquery.fn.html is ok to use in both cases here
 				//      this might be overly defensive in preventing unknowing xss
 				// if the html attribute is defined on the loading settings, use that
 				// otherwise use the fallbacks from above
@@ -1836,7 +1836,7 @@ if ( !$.support.boxShadow ) {
 			return $.mobile.hashListeningEnabled === true;
 		},
 
-		// TODO a lot of duplication between popstate and hashchange
+		// Comment: a lot of duplication between popstate and hashchange
 		popstate: function( event ) {
 			var newEvent = new $.Event( "navigate" ),
 				beforeNavigate = new $.Event( "beforenavigate" ),
@@ -1888,13 +1888,13 @@ if ( !$.support.boxShadow ) {
 				// Users that want to fully normalize the two events
 				// will need to do history management down the stack and
 				// add the state to the event before this binding is fired
-				// TODO consider allowing for the explicit addition of callbacks
+				// Comment: consider allowing for the explicit addition of callbacks
 				//      to be fired before this value is set to avoid event timing issues
 				state: event.hashchangeState || {}
 			});
 		},
 
-		// TODO We really only want to set this up once
+		// Comment: We really only want to set this up once
 		//      but I'm not clear if there's a beter way to achieve
 		//      this with the jQuery special event structure
 		setup: function( data, namespaces ) {
@@ -2203,7 +2203,7 @@ if ( !$.support.boxShadow ) {
 				// the passed url may not yield the correct result
 				search = this.parseUrl( href ).search;
 
-				// TODO all this crap is terrible, clean it up
+				// Comment: all this crap is terrible, clean it up
 				if ( isPath ) {
 					// reject the hash if it's a path or it's just a dialog key
 					if( path.isPath( preservedHash ) || preservedHash.replace("#", "").indexOf( this.uiStateKey ) === 0) {
@@ -2346,7 +2346,7 @@ if ( !$.support.boxShadow ) {
 			// of the slice must then be added to the result to get the element index
 			// in the original history stack :( :(
 			//
-			// TODO this is hyper confusing and should be cleaned up (ugh so bad)
+			// Comment: this is hyper confusing and should be cleaned up (ugh so bad)
 			if( closest === undefined ) {
 				closest = this.find( url, this.stack.slice(a), true );
 				closest = closest === undefined ? closest : closest + a;
@@ -2367,7 +2367,7 @@ if ( !$.support.boxShadow ) {
 
 			// invoke callbacks where appropriate
 			//
-			// TODO this is also convoluted and confusing
+			// Comment: this is also convoluted and confusing
 			if ( newActiveIndex < a ) {
 				( opts.present || opts.back || $.noop )( this.getActive(), 'back' );
 			} else if ( newActiveIndex > a ) {
@@ -2452,7 +2452,7 @@ if ( !$.support.boxShadow ) {
 			return hash;
 		},
 
-		// TODO reconsider name
+		// Comment: reconsider name
 		go: function( url, data, noEvents ) {
 			var state, href, hash, popstateEvent,
 				isPopStateEvent = $.event.special.navigate.isPushStateEnabled();
@@ -2527,7 +2527,7 @@ if ( !$.support.boxShadow ) {
 		// and completely prevent them from propagating. The popstate event will then be
 		// retriggered after execution resumes
 		//
-		// TODO grab the original event here and use it for the synthetic event in the
+		// Comment: grab the original event here and use it for the synthetic event in the
 		//      second half of the navigate execution that will follow this binding
 		popstate: function( event ) {
 			var active, hash, state, closestIndex;
@@ -2568,7 +2568,7 @@ if ( !$.support.boxShadow ) {
 			// when the hash is changed by assignment, and it won't have a state associated. We
 			// then need to squash the hash. See below for handling of hash assignment that
 			// matches an existing history entry
-			// TODO it might be better to only add to the history stack
+			// Comment: it might be better to only add to the history stack
 			//      when the hash is adjacent to the active history entry
 			hash = path.parseLocation().hash;
 			if( !event.originalEvent.state && hash ) {
@@ -2607,7 +2607,7 @@ if ( !$.support.boxShadow ) {
 		// NOTE must bind before `navigate` special event hashchange binding otherwise the
 		//      navigation data won't be attached to the hashchange event in time for those
 		//      bindings to attach it to the `navigate` special event
-		// TODO add a check here that `hashchange.navigate` is bound already otherwise it's
+		// Comment: add a check here that `hashchange.navigate` is bound already otherwise it's
 		//      broken (exception?)
 		hashchange: function( event ) {
 			var history, hash;
@@ -2649,7 +2649,7 @@ if ( !$.support.boxShadow ) {
 				// NOTE it's not entirely clear that this is the right thing to do given that we
 				//      can't know the users intention. It might be better to explicitly _not_
 				//      support location.hash assignment in preference to $.navigate calls
-				// TODO first arg to add should be the href, but it causes issues in identifying
+				// Comment: first arg to add should be the href, but it causes issues in identifying
 				//      embeded pages
 				missing: function() {
 					history.add( hash, {
@@ -2665,9 +2665,9 @@ if ( !$.support.boxShadow ) {
 
 
 (function( $, undefined ) {
-	// TODO consider queueing navigation activity until previous activities have completed
+	// Comment: consider queueing navigation activity until previous activities have completed
 	//      so that end users don't have to think about it. Punting for now
-	// TODO !! move the event bindings into callbacks on the navigate event
+	// Comment: !! move the event bindings into callbacks on the navigate event
 	$.mobile.navigate = function( url, data, noEvents ) {
 		$.mobile.navigate.navigator.go( url, data, noEvents );
 	};
@@ -4296,7 +4296,7 @@ $.mobile.getMaxScrollForTransition = $.mobile.getMaxScrollForTransition || defau
 						//page title regexp
 						newPageTitle = html.match( /<title[^>]*>([^<]*)/ ) && RegExp.$1,
 
-						// TODO handle dialogs again
+						// Comment: handle dialogs again
 						pageElemRegex = new RegExp( "(<[^>]+\\bdata-" + $.mobile.ns + "role=[\"']?page[\"']?[^>]*>)" ),
 						dataUrlRegex = new RegExp( "\\bdata-" + $.mobile.ns + "url=[\"']?([^\"'>]*)[\"']?" );
 
@@ -4350,7 +4350,7 @@ $.mobile.getMaxScrollForTransition = $.mobile.getMaxScrollForTransition || defau
 					}
 
 					//append to page and enhance
-					// TODO taging a page with external to make sure that embedded pages aren't removed
+					// Comment: taging a page with external to make sure that embedded pages aren't removed
 					//      by the various page handling code is bad. Having page handling code in many
 					//      places is bad. Solutions post 1.0
 					page
@@ -4670,12 +4670,12 @@ $.mobile.getMaxScrollForTransition = $.mobile.getMaxScrollForTransition || defau
 			var params;
 
 			// rebuilding the hash here since we loose it earlier on
-			// TODO preserve the originally passed in path
+			// Comment: preserve the originally passed in path
 			if( !path.isPath( url ) && url.indexOf( "#" ) < 0 ) {
 				url = "#" + url;
 			}
 
-			// TODO the property names here are just silly
+			// Comment: the property names here are just silly
 			params = {
 				transition: settings.transition,
 				title: pageTitle,
@@ -4885,7 +4885,7 @@ $.mobile.getMaxScrollForTransition = $.mobile.getMaxScrollForTransition || defau
 					return;
 				}
 
-				// TODO teach $.mobile.hijackable to operate on raw dom elements so the
+				// Comment: teach $.mobile.hijackable to operate on raw dom elements so the
 				// link wrapping can be avoided
 				if ( !$( target ).jqmHijackable().length ) {
 					return;
@@ -4932,7 +4932,7 @@ $.mobile.getMaxScrollForTransition = $.mobile.getMaxScrollForTransition || defau
 
 			// If there is no link associated with the click or its not a left
 			// click we want to ignore the click
-			// TODO teach $.mobile.hijackable to operate on raw dom elements so the link wrapping
+			// Comment: teach $.mobile.hijackable to operate on raw dom elements so the link wrapping
 			// can be avoided
 			if ( !link || event.which > 1 || !$link.jqmHijackable().length ) {
 				return;
@@ -4997,7 +4997,7 @@ $.mobile.getMaxScrollForTransition = $.mobile.getMaxScrollForTransition || defau
 				// requests to go through our page loading logic.
 
 				//check for protocol or rel and its not an embedded page
-				//TODO overlap in logic from isExternal, rel=external check should be
+				//Comment: overlap in logic from isExternal, rel=external check should be
 				//     moved into more comprehensive isExternalLink
 				isExternal = useDefaultUrlHandling || ( path.isExternal( href ) && !path.isPermittedCrossDomainRequest( documentUrl, href ) );
 
@@ -5111,7 +5111,7 @@ $.mobile.getMaxScrollForTransition = $.mobile.getMaxScrollForTransition || defau
 			}
 		};
 
-		// TODO roll the logic here into the handleHashChange method
+		// Comment: roll the logic here into the handleHashChange method
 		$window.bind( "navigate", function( e, data ) {
 			var url = $.event.special.navigate.originalEventName.indexOf( "hashchange" ) > -1 ? data.state.hash : data.state.url;
 
@@ -5414,7 +5414,7 @@ $.mobile.page.prototype.options.contentTheme = null;
 
 // NOTE bind used to force this binding to run before the buttonMarkup binding
 //      which expects .ui-footer top be applied in its gigantic selector
-// TODO remove the buttonMarkup giant selector and move it to the various modules
+// Comment: remove the buttonMarkup giant selector and move it to the various modules
 //      on which it depends
 $.mobile.document.bind( "pagecreate", function( e ) {
 	var $page = $( e.target ),
@@ -6550,7 +6550,7 @@ $.widget( "mobile.listview", $.mobile.widget, {
 		}
 	},
 
-	// TODO sort out a better way to track sub pages of the listview this is brittle
+	// Comment: sort out a better way to track sub pages of the listview this is brittle
 	childPages: function() {
 		var parentUrl = this.parentPage.jqmData( "url" );
 
@@ -6709,7 +6709,7 @@ $.widget( "mobile.checkboxradio", $.mobile.widget, {
 
 				// trigger click handler's bound directly to the input as a substitute for
 				// how label clicks behave normally in the browsers
-				// TODO: it would be nice to let the browser's handle the clicks and pass them
+				// Comment:: it would be nice to let the browser's handle the clicks and pass them
 				//       through to the associate input. we can swallow that click at the parent
 				//       wrapper element level
 				input.triggerHandler( 'click' );
@@ -6872,12 +6872,12 @@ $.widget( "mobile.button", $.mobile.widget, {
 		}
 
 		// get the inherited theme
-		// TODO centralize for all widgets
+		// Comment: centralize for all widgets
 		if ( !this.options.theme ) {
 			this.options.theme = $.mobile.getInheritedTheme( this.element, "c" );
 		}
 
-		// TODO: Post 1.1--once we have time to test thoroughly--any classes manually applied to the original element should be carried over to the enhanced element, with an `-enhanced` suffix. See https://github.com/jquery/jquery-mobile/issues/3577
+		// Comment:: Post 1.1--once we have time to test thoroughly--any classes manually applied to the original element should be carried over to the enhanced element, with an `-enhanced` suffix. See https://github.com/jquery/jquery-mobile/issues/3577
 		/* if ( $el[0].className.length ) {
 			classes = $el[0].className;
 		} */
@@ -7053,7 +7053,7 @@ $.mobile.document.bind( "pagecreate create", function( e ) {
 
 	$.widget( "mobile.controlgroup", $.mobile.controlgroup, $.mobile.behaviors.addFirstLastClasses );
 
-	// TODO: Implement a mechanism to allow widgets to become enhanced in the
+	// Comment:: Implement a mechanism to allow widgets to become enhanced in the
 	// correct order when their correct enhancement depends on other widgets in
 	// the page being correctly enhanced already.
 	//
@@ -7282,7 +7282,7 @@ $( document ).bind( "pagecreate create", function( e ) {
 			}
 
 			// define the container for navigation event bindings
-			// TODO this would be nice at the the mobile widget level
+			// Comment: this would be nice at the the mobile widget level
 			this.options.container = this.options.container || $.mobile.pageContainer;
 
 			// Apply the proto
@@ -7455,7 +7455,7 @@ $( document ).bind( "pagecreate create", function( e ) {
 				this[ setter ]( value );
 			}
 
-			// TODO REMOVE FOR 1.2.1 by moving them out to a default options object
+			// Comment: REMOVE FOR 1.2.1 by moving them out to a default options object
 			exclusions = [
 				"initSelector",
 				"closeLinkSelector",
@@ -7558,7 +7558,7 @@ $( document ).bind( "pagecreate create", function( e ) {
 			// NOTE before removing the default animation of the screen
 			//      this had an animate callback that would resolve the deferred
 			//      now the deferred is resolved immediately
-			// TODO remove the dependency on the screen deferred
+			// Comment: remove the dependency on the screen deferred
 			this._ui.screen
 				.removeClass( args.classToRemove )
 				.addClass( args.screenClassToAdd );
@@ -7650,7 +7650,7 @@ $( document ).bind( "pagecreate create", function( e ) {
 
 		_open: function( options ) {
 			var o = $.extend( {}, this.options, options ),
-				// TODO move blacklist to private method
+				// Comment: move blacklist to private method
 				androidBlacklist = ( function() {
 					var w = window,
 						ua = navigator.userAgent,
@@ -7690,7 +7690,7 @@ $( document ).bind( "pagecreate create", function( e ) {
 			this._reposition( o );
 
 			if ( this.options.overlayTheme && androidBlacklist ) {
-				/* TODO:
+				/* Comment::
 				The native browser on Android 4.0.X ("Ice Cream Sandwich") suffers from an issue where the popup overlay appears to be z-indexed
 				above the popup itself when certain other styles exist on the same page -- namely, any element set to `position: fixed` and certain
 				types of input. These issues are reminiscent of previously uncovered bugs in older versions of Android's native browser:
@@ -7703,7 +7703,7 @@ $( document ).bind( "pagecreate create", function( e ) {
 				https://github.com/jquery/jquery-mobile/issues/4874
 				*/
 
-				// TODO sort out why this._page isn't working
+				// Comment: sort out why this._page isn't working
 				this.element.closest( ".ui-page" ).addClass( "ui-popup-open" );
 			}
 			this._animate({
@@ -7835,7 +7835,7 @@ $( document ).bind( "pagecreate create", function( e ) {
 				.one( this.options.closeEvents, $.proxy( this, "_closePopup" ) );
 		},
 
-		// TODO no clear deliniation of what should be here and
+		// Comment: no clear deliniation of what should be here and
 		// what should be in _open. Seems to be "visual" vs "history" for now
 		open: function( options ) {
 			var self = this, opts = this.options, url, hashkey, activePage, currentIsDialog, hasHash, urlHistory;
@@ -7924,7 +7924,7 @@ $( document ).bind( "pagecreate create", function( e ) {
 	});
 
 
-	// TODO this can be moved inside the widget
+	// Comment: this can be moved inside the widget
 	$.mobile.popup.handleLink = function( $link ) {
 		var closestPage = $link.closest( ":jqmData(role='page')" ),
 			scope = ( ( closestPage.length === 0 ) ? $( "body" ) : closestPage ),
@@ -7954,7 +7954,7 @@ $( document ).bind( "pagecreate create", function( e ) {
 		}, 300 );
 	};
 
-	// TODO move inside _create
+	// Comment: move inside _create
 	$.mobile.document.bind( "pagebeforechange", function( e, data ) {
 		if ( data.options.role === "popup" ) {
 			$.mobile.popup.handleLink( data.options.link );
@@ -8525,7 +8525,7 @@ $.mobile.document.delegate( ":jqmData(role='table')", "tablecreate", function() 
 
 	self.element.addClass( o.classes.columnToggleTable );
 
-	var id = ( $table.attr( "id" ) || o.classes.popup ) + "-popup", //TODO BETTER FALLBACK ID HERE
+	var id = ( $table.attr( "id" ) || o.classes.popup ) + "-popup", //Comment: BETTER FALLBACK ID HERE
 		$menuButton = $( "<a href='#" + id + "' class='" + o.classes.columnBtn + "' data-" + ns + "rel='popup' data-" + ns + "mini='true'>" + o.columnBtnText + "</a>" ),
 		$popup = $( "<div data-" + ns + "role='popup' data-" + ns + "role='fieldcontain' class='" + o.classes.popup + "' id='" + id + "'></div>"),
 		$menu = $("<fieldset data-" + ns + "role='controlgroup'></fieldset>");
@@ -8551,7 +8551,7 @@ $.mobile.document.delegate( ":jqmData(role='table')", "tablecreate", function() 
 	});
 		$menu.appendTo( $popup );
 
-	// bind change event listeners to inputs - TODO: move to a private method?
+	// bind change event listeners to inputs - Comment:: move to a private method?
 	$menu.on( "change", "input", function( e ){
 		if( this.checked ){
 			$( this ).jqmData( "cells" ).removeClass( "ui-table-cell-hidden" ).addClass( "ui-table-cell-visible" );
@@ -8865,7 +8865,7 @@ $.mobile.listview.prototype.options.filter = false;
 $.mobile.listview.prototype.options.filterPlaceholder = "Filter items...";
 $.mobile.listview.prototype.options.filterTheme = "c";
 $.mobile.listview.prototype.options.filterReveal = false;
-// TODO rename callback/deprecate and default to the item itself as the first argument
+// Comment: rename callback/deprecate and default to the item itself as the first argument
 var defaultFilterCallback = function( text, searchValue, item ) {
 		return text.toString().toLowerCase().indexOf( searchValue ) === -1;
 	};
@@ -9009,7 +9009,7 @@ $.widget( "mobile.slider", $.mobile.widget, {
 
 	_create: function() {
 
-		// TODO: Each of these should have comments explain what they're for
+		// Comment:: Each of these should have comments explain what they're for
 		var self = this,
 			control = this.element,
 			parentTheme = $.mobile.getInheritedTheme( control, "c" ),
@@ -9744,7 +9744,7 @@ $.widget( "mobile.selectmenu", $.mobile.widget, {
 	// setup items that are generally necessary for select menu extension
 	_preExtension: function() {
 		var classes = "";
-		// TODO: Post 1.1--once we have time to test thoroughly--any classes manually applied to the original element should be carried over to the enhanced element, with an `-enhanced` suffix. See https://github.com/jquery/jquery-mobile/issues/3577
+		// Comment:: Post 1.1--once we have time to test thoroughly--any classes manually applied to the original element should be carried over to the enhanced element, with an `-enhanced` suffix. See https://github.com/jquery/jquery-mobile/issues/3577
 		/* if ( $el[0].className.length ) {
 			classes = $el[0].className;
 		} */
@@ -9781,7 +9781,7 @@ $.widget( "mobile.selectmenu", $.mobile.widget, {
 
 		// Allows for extension of the native select for custom selects and other plugins
 		// see select.custom for example extension
-		// TODO explore plugin registration
+		// Comment: explore plugin registration
 		this._trigger( "beforeCreate" );
 
 		this.button = this._button();
@@ -9799,7 +9799,7 @@ $.widget( "mobile.selectmenu", $.mobile.widget, {
 			// select first in this case
 			selectedIndex = this.select[ 0 ].selectedIndex === -1 ? 0 : this.select[ 0 ].selectedIndex,
 
-			// TODO values buttonId and menuId are undefined here
+			// Comment: values buttonId and menuId are undefined here
 			button = this.button
 				.insertBefore( this.select )
 				.buttonMarkup( {
@@ -9935,7 +9935,7 @@ $.widget( "mobile.selectmenu", $.mobile.widget, {
 				text = self.placeholder;
 			}
 
-			// TODO possibly aggregate multiple select option classes
+			// Comment: possibly aggregate multiple select option classes
 			return span.text( text )
 				.addClass( self.select.attr( "class" ) )
 				.addClass( selected.attr( "class" ) );
@@ -10206,10 +10206,10 @@ $.mobile.document.bind( "pagecreate create", function( e ) {
 				// button refocus ensures proper height calculation
 				// by removing the inline style and ensuring page inclusion
 				self.menuPage.bind( "pagehide", function() {
-					// TODO centralize page removal binding / handling in the page plugin.
+					// Comment: centralize page removal binding / handling in the page plugin.
 					// Suggestion from @jblas to do refcounting
 					//
-					// TODO extremely confusing dependency on the open method where the pagehide.remove
+					// Comment: extremely confusing dependency on the open method where the pagehide.remove
 					// bindings are stripped to prevent the parent page from disappearing. The way
 					// we're keeping pages in the DOM right now sucks
 					//
@@ -10245,7 +10245,7 @@ $.mobile.document.bind( "pagecreate create", function( e ) {
 				var list = this.list.find( "li" ),
 					options = this._selectOptions();
 
-				// TODO exceedingly naive method to determine difference
+				// Comment: exceedingly naive method to determine difference
 				// ignores value changes etc in favor of a forcedRebuild
 				// from the user in the refresh method
 				return options.text() !== list.text();
@@ -10475,11 +10475,11 @@ $.mobile.document.bind( "pagecreate create", function( e ) {
 				return $( "<a>", {
 					"href": "#",
 					"role": "button",
-					// TODO value is undefined at creation
+					// Comment: value is undefined at creation
 					"id": this.buttonId,
 					"aria-haspopup": "true",
 
-					// TODO value is undefined at creation
+					// Comment: value is undefined at creation
 					"aria-owns": this.menuId
 				});
 			},
@@ -11041,7 +11041,7 @@ $.mobile.document.bind( "pagecreate create", function( e ) {
 				if( !$.event.special.navigate.isPushStateEnabled() ) {
 					$window.trigger( "hashchange", [true] );
 				} else {
-					// TODO figure out how to simplify this interaction with the initial history entry
+					// Comment: figure out how to simplify this interaction with the initial history entry
 					// at the bottom js/navigate/navigate.js
 					$.mobile.navigate.history.stack = [];
 					$.mobile.navigate( $.mobile.path.isPath( location.hash ) ? location.hash : location.href );
