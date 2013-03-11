@@ -35,6 +35,8 @@ urlpatterns = patterns('',
     url(r'^voice/(?P<voice_id>\d+)/$', 'arc.views.voice', name='voice'),
     url(r'^voices/$', 'arc.views.voices', name='voices'),
     url(r'^stats/$', 'arc.views.stats', name='stats'),
+    url(r'^print/A4/(?P<qr_id>\d+)/$', 'arc.views.print_poster_A4', name="print_A4"),
+    url(r'^print/$', 'arc.views.printqr', name="printqr"),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

@@ -30,22 +30,11 @@ djcelery.setup_loader()
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
-)
+ADMINS = local_settings.ADMINS
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': os.path.join(os.path.dirname(__file__), 'voices.db'),  # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
+DATABASES = local_settings.DATABASES
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -70,35 +59,21 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
+HTTP_URL = local_settings.HTTP_URL
 
-LOGIN_REDIRECT_URL = '/v/'
+HTTPS_URL = local_settings.HTTPS_URL
 
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = '/home/cgaspoz/Dev/voices/static'
+LOGIN_REDIRECT_URL = local_settings.LOGIN_REDIRECT_URL
 
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = '/media/'
+MEDIA_ROOT = local_settings.MEDIA_ROOT
 
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/home/cgaspoz/Dev/voices/sitestatic'
+MEDIA_URL = local_settings.MEDIA_URL
 
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+STATIC_ROOT = local_settings.STATIC_ROOT
 
-# Additional locations of static files
-STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    '/home/cgaspoz/Dev/voices/static',
-)
+STATIC_URL = local_settings.STATIC_URL
+
+STATICFILES_DIRS = local_settings.STATICFILES_DIRS
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -109,7 +84,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '#v_8r%$yk0&amp;yhole-xh!ue^073_#%b3deb-6-6pblpe&amp;kbz+de'
+SECRET_KEY = local_settings.SECRET_KEY
 
 # This is the UserProfile model that should be used
 AUTH_PROFILE_MODULE = 'arc.UserProfile'

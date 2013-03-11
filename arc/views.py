@@ -25,8 +25,20 @@ from django.template.context import RequestContext
 from django.core.urlresolvers import reverse
 from arc.models import Room, NotificationItem, Voice, URGENCY_CHOICES, VoiceState, QRcode, QRsnap
 from arc.tasks import send_notification
+from voices import settings
 from django import forms
 import datetime
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+from reportlab.graphics.shapes import Drawing, Rect
+from reportlab.graphics.barcode.qr import QrCodeWidget
+from reportlab.graphics import renderPDF
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.units import mm
+from reportlab.lib import colors
+
+
+
 
 
 class VoiceForm(forms.Form):
@@ -106,3 +118,57 @@ def stats(request):
     states = VoiceState.objects.all()
     return render_to_response('stats.html', {"voices": voices, "states": states},
                               context_instance=RequestContext(request))
+
+
+def printqr(request):
+    rooms = Room.objects.all()
+    return render_to_response('print.html', {"rooms": rooms, }, context_instance=RequestContext(request))
+
+
+def print_poster_A4(request, qr_id):
+    qrcode = QRcode.objects.get(pk=int(qr_id))
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="posterA4-%s.pdf"; size=A4' % (str(qrcode.room.room_number))
+
+    p = canvas.Canvas(response)
+    p.drawImage('/home/cgaspoz/Dev/voices/static/templates/talk_to_us_A4.jpg', 0, 0, width=210*mm, height=297*mm)
+
+    qr_size = 90.5*mm
+    qr_x = 60*mm
+    qr_y = 63*mm
+
+    qrw = QrCodeWidget(settings.HTTP_URL + "qr/" + str(qrcode.qr) + "/")
+    qrw.barHeight = qr_size
+    qrw.barWidth = qr_size
+    qrw.barLevel = 'Q'  # M, L, H, Q
+    qrw.barBorder = 0
+
+    d = Drawing(qr_size, qr_size)
+    d.add(qrw)
+    d.add(Rect(5.6*mm, 5.6*mm, 8*mm, 8*mm, strokeColor=colors.CMYKColor(1, 0, 0, 0), fillColor=colors.CMYKColor(1, 0, 0, 0)))
+    d.add(Rect(76.9*mm, 76.9*mm, 8*mm, 8*mm, strokeColor=colors.CMYKColor(1, 0, 0, 0), fillColor=colors.CMYKColor(1, 0, 0, 0)))
+    d.add(Rect(5.6*mm, 76.9*mm, 8*mm, 8*mm, strokeColor=colors.CMYKColor(1, 0, 0, 0), fillColor=colors.CMYKColor(1, 0, 0, 0)))
+
+    renderPDF.draw(d, p, qr_x, qr_y)
+
+    p.showPage()
+
+    text = p.beginText()
+    text.setTextOrigin(12*mm,277*mm)
+    text.setFillGray(0.5)
+    text.setFont("Helvetica", 10)
+    text.textLines('''
+        Talk to us! @ HE-Arc
+        Campus: %s
+        Building: %s
+        Floor: %s
+        Room: %s-%s
+        QR-Code: %s''' % (qrcode.room.floor.building.campus.name, qrcode.room.floor.building.name,
+                          qrcode.room.floor.floor_display, qrcode.room.room_number, qrcode.room.room_name, qrcode.qr))
+    p.drawText(text)
+
+    p.showPage()
+
+    p.save()
+
+    return response

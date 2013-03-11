@@ -1,0 +1,29 @@
+{% extends "base_bootstrap.html" %}
+
+{% block title %}Impression des QR-Codes{% endblock %}
+
+{% block content %}
+    <p><img src="{{ STATIC_URL }}img/ttu.gif" alt="Talk to us! logo"></p>
+    <h3>Impression des QR-Codes</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Bâtiment</th><th>Etage</th><th>Local</th><th>Code(s)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in rooms %}
+                <tr>
+                    <td>{{ room.floor.building.short_name }}</td>
+                    <td>{{ room.floor.floor_display }}</td>
+                    <td>{{ room.room_number }}-{{ room.room_name }}</td>
+                    <td>
+                        {% for qr in room.qrcode_set.all %}
+                            <a href="{% url print_A4 qr.id %}">{{ qr.qr }}</a>&nbsp;&nbsp;&nbsp;
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
