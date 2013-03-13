@@ -3,8 +3,17 @@
 {% block title %}Impression des QR-Codes{% endblock %}
 
 {% block content %}
-    <p><img src="{{ STATIC_URL }}img/ttu.gif" alt="Talk to us! logo"></p>
     <h3>Impression des QR-Codes</h3>
+    <ul class="nav nav-pills">
+    {% if filtered %}
+        <li><a href="{% url desktop_printqr %}">All</a></li>
+    {% else %}
+        <li class="active"><a href="{% url desktop_printqr %}">All</a></li>
+    {% endif %}
+    {% for building in buildings %}
+        <li{% if filtered == building.id %} class="active"{% endif %}><a href="{% url desktop_printqr building.id %}">{{ building.name }}</a></li>
+    {% endfor %}
+    </ul>
     <table class="table table-striped">
         <thead>
             <tr>

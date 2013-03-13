@@ -23,7 +23,7 @@
 from django.shortcuts import render_to_response, redirect, HttpResponseRedirect
 from django.template.context import RequestContext
 from django.core.urlresolvers import reverse
-from arc.models import Room, NotificationItem, Voice, URGENCY_CHOICES, VoiceState, QRcode, QRsnap
+from arc.models import Room, NotificationItem, Voice, URGENCY_CHOICES, VoiceState, QRcode, QRsnap, Building
 from arc.tasks import send_notification
 from voices import settings
 from django import forms
@@ -120,9 +120,20 @@ def stats(request):
                               context_instance=RequestContext(request))
 
 
-def printqr(request):
-    rooms = Room.objects.all()
-    return render_to_response('print.html', {"rooms": rooms, }, context_instance=RequestContext(request))
+def desktop_home(request):
+
+    return render_to_response('desktop_home.html', context_instance=RequestContext(request))
+
+
+def desktop_printqr(request, building_id=None):
+    buildings = Building.objects.all()
+    if building_id:
+        rooms = Room.objects.filter(floor__building__id__exact=int(building_id)).order_by('floor__floor_number', 'room_number')
+        filtered = int(building_id)
+    else:
+        rooms = Room.objects.all().order_by('floor__building__short_name', 'floor__floor_number', 'room_number')
+        filtered = False
+    return render_to_response('print.html', {"rooms": rooms, 'buildings': buildings, 'filtered': filtered}, context_instance=RequestContext(request))
 
 
 def print_poster_A4(request, qr_id):

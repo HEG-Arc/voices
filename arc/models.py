@@ -22,6 +22,7 @@
 
 from django.db import models
 from django.contrib.auth.models import User, Group
+from voices import settings
 
 URGENCY_CHOICES = (
     (1, u'Haute'),
@@ -36,6 +37,7 @@ URGENCY_CHOICES = (
 class Campus(models.Model):
     name = models.CharField(max_length=50)
     short_name = models.CharField(max_length=10)
+    #order = models.IntegerField(default=99)
 
     def __unicode__(self):
         return self.short_name
@@ -45,6 +47,7 @@ class Building(models.Model):
     campus = models.ForeignKey(Campus)
     name = models.CharField(max_length=50)
     short_name = models.CharField(max_length=10)
+    #order = models.IntegerField(default=99)
 
     def __unicode__(self):
         return self.short_name
@@ -95,11 +98,11 @@ class Room(models.Model):
     room_display = models.CharField(max_length=10)
     room_number = models.IntegerField()
     notification_groups = models.ManyToManyField(NotificationGroup)
-    geo = models.CommaSeparatedIntegerField(max_length=255)
-    description = models.TextField()
-    picture_height = models.IntegerField()
-    picture_weight = models.IntegerField()
-    picture = models.ImageField(upload_to='/home/cgaspoz/Dev/voices/static/room', height_field=picture_height, width_field=picture_weight)
+    geo = models.CommaSeparatedIntegerField(max_length=255, blank=True)
+    description = models.TextField(blank=True)
+    picture_height = models.IntegerField(blank=True)
+    picture_weight = models.IntegerField(blank=True)
+    picture = models.ImageField(upload_to=settings.MEDIA_ROOT + '/room', height_field=picture_height, width_field=picture_weight, blank=True)
 
     def __unicode__(self):
         return self.room_display + " " + self.room_name

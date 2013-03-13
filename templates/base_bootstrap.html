@@ -39,16 +39,16 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="{% url home %}">Talk to us!</a>
+                    <a class="brand" href="{% url home %}"><img src="{{ STATIC_URL }}img/talk_tu_us_web_grey.png" alt="Logo Talk to us!"></a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li class="active"><a href="#">Home</a></li>
+                            <li class="active"><a href="{% url desktop_home %}">Home</a></li>
                             <li><a href="#about">About</a></li>
                             <li><a href="#contact">Contact</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
+                                    <li><a href="{% url desktop_printqr %}">Print QR-Codes</a></li>
                                     <li><a href="#">Another action</a></li>
                                     <li><a href="#">Something else here</a></li>
                                     <li class="divider"></li>
@@ -99,9 +99,9 @@
             <hr>
 
             <footer>
-                <p>&copy; Cédric Gaspoz 2013<br>Voices est un projet de recherche de la HEG Arc mené par Cédric Gaspoz
-                    et son équipe. Plus d'informations sur
-                    <a href="http://marmix.ig.he-arc.ch/voices/">http://marmix.ig.he-arc.ch/voices/</a></p>
+                <p>&copy; 2013 Cédric Gaspoz<br>Voices est un projet de recherche de la HEG Arc. Plus d'informations sur
+                    <a href="http://marmix.ig.he-arc.ch/voices/">http://marmix.ig.he-arc.ch/voices/</a> ou sur
+                    <a href="http://heg-arc.github.com/voices/">http://heg-arc.github.com/voices/</a></p>
             </footer>
 
         </div> <!-- /container -->
